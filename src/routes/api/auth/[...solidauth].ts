@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { SolidAuth, type SolidAuthConfig } from "@solid-auth/next";
 import Google from "@auth/core/providers/google";
 import { serverEnv } from "~/env/server";

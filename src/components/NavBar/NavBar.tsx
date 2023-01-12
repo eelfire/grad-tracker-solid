@@ -20,7 +20,7 @@ const NavBar: Component<INavBarProps> = () => {
               <p class="text-lg font-semibold">You are not signed in</p>
               <button
                 class="p-2.5 rounded-lg bg-[#346df1] text-white text-lg font-bold flex items-center justify-center"
-                onClick={() => signIn("github")}
+                onClick={() => signIn("google")}
               >
                 Sign in
               </button>

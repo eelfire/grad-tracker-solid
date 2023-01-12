@@ -11,7 +11,7 @@ const Protected = (Comp: IProtectedComponent) => {
       async (_, event) => {
         const session = await getSession(event.request, authOpts);
         if (!session || !session.user) {
-          throw redirect("/");
+          throw redirect("/login");
         }
         return session;
       },
