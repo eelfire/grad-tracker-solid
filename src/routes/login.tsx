@@ -1,10 +1,9 @@
 import { Title, Head, Meta, Link, Body } from "solid-start";
 import { Show } from "solid-js";
-import { NavBar } from "~/components";
-import { signIn, signOut } from "@solid-auth/next/client";
-import { createServerData$ } from "solid-start/server";
-import { getSession } from "@solid-auth/next";
-import { authOpts } from "./api/auth/[...solidauth]";
+import { getSession } from "@auth/solid-start"
+import { createServerData$ } from "solid-start/server"
+import { authOpts } from "~/routes/api/auth/[...solidauth]"
+import { signIn, signOut } from "@auth/solid-start/client"
 
 const loginPage = () => {
   const session = useSession();

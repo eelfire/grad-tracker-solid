@@ -25,11 +25,9 @@
     "vite": "^3.1.0"
   },
   "dependencies": {
-    "@auth/core": "0.1.4",
+    "@auth/core": "^0.2.5",
     "@auth/solid-start": "^0.1.0",
     "@prisma/client": "^4.6.1",
-    "@solid-auth/core": "^0.0.6",
-    "@solid-auth/next": "^0.0.19",
     "@solidjs/meta": "^0.28.2",
     "@solidjs/router": "^0.6.0",
     "solid-js": "^1.5.7",
