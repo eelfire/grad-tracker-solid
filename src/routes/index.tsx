@@ -1,6 +1,7 @@
 import { type VoidComponent } from "solid-js";
 import { Body, Head, Link, Meta, Title } from "solid-start";
 import Navbar from "~/components/Navbar";
+import Quest from "~/components/Quest";
 
 const Home: VoidComponent = () => {
   return (
@@ -15,6 +16,7 @@ const Home: VoidComponent = () => {
       </Head>
       <Body>
         <Navbar />
+        <Quest />
         <div class="m-12">
           <div class="w-full flex flex-row max-w-screen-2xl overflow-hidden m-auto">
             <div class="flex flex-col flex-1">
