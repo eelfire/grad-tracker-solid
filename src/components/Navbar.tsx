@@ -1,4 +1,5 @@
 // import {} from "solid-js";
+import { signOut } from "@auth/solid-start/client";
 import { A } from "solid-start";
 
 const Navbar = () => {
@@ -36,6 +37,9 @@ const Navbar = () => {
         />
         <button class="">
           <img src="/user.svg" alt="profile" class=" h-8" />
+        </button>
+        <button class="ml-2 rounded-lg bg-red-600" onclick={()=>signOut("google")}>
+          <p class="text-red-100 pl-3 pr-3 pt-2 pb-2">Logout</p>
         </button>
       </div>
     </nav>
