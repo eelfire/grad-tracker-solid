@@ -16,7 +16,12 @@ const Home: VoidComponent = () => {
       </Head>
       <Body>
         <Navbar />
-        <Quest />
+        <div class="max-w-screen-2xl m-auto">
+          <details class="m-6 mt-12 p-4 border-2 rounded-2xl">
+            <summary class=" text-2xl">Questionnaire</summary>
+            <Quest />
+          </details>
+        </div>
         <div class="m-12">
           <div class="w-full flex flex-row max-w-screen-2xl overflow-hidden m-auto">
             <div class="flex flex-col flex-1">

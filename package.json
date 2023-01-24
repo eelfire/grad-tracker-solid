@@ -30,6 +30,7 @@
     "@prisma/client": "^4.6.1",
     "@solidjs/meta": "^0.28.2",
     "@solidjs/router": "^0.6.0",
+    "@tailwindcss/forms": "^0.5.3",
     "solid-js": "^1.5.7",
     "solid-start": "^0.2.11",
     "undici": "5.11.0",
