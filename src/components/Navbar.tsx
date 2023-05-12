@@ -1,6 +1,4 @@
-// import {} from "solid-js";
 import { signOut } from "@auth/solid-start/client";
-import { A } from "solid-start";
 
 const Navbar = () => {
   return (
@@ -10,24 +8,24 @@ const Navbar = () => {
         <h1 class="p-4">Grad-Tracker</h1>
       </div>
       <div class="flex-1 items-center p-2 m-2">
-        <A href="/" class="p-2 m-2 bg-teal-100 text-teal-600 rounded-lg">
+        <a href="/" class="p-2 m-2 bg-teal-100 text-teal-600 rounded-lg">
           Dashboard
-        </A>
-        <A href="/courses" class="p-2 m-2 bg-teal-100 text-teal-600 rounded-lg">
+        </a>
+        <a href="/courses" class="p-2 m-2 bg-teal-100 text-teal-600 rounded-lg">
           Courses
-        </A>
-        <A href="/planner" class="p-2 m-2 bg-teal-100 text-teal-600 rounded-lg">
+        </a>
+        <a href="/planner" class="p-2 m-2 bg-teal-100 text-teal-600 rounded-lg">
           Planner
-        </A>
-        <A href="/feed" class="p-2 m-2 bg-teal-100 text-teal-600 rounded-lg">
+        </a>
+        <a href="/feed" class="p-2 m-2 bg-teal-100 text-teal-600 rounded-lg">
           Feed
-        </A>
-        <A
+        </a>
+        <a
           href="/calendar"
           class="p-2 m-2 bg-teal-100 text-teal-600 rounded-lg"
         >
           Calendar
-        </A>
+        </a>
       </div>
       <div class="flex-end mr-8 flex items-center">
         <input
@@ -38,7 +36,10 @@ const Navbar = () => {
         <button class="">
           <img src="/user.svg" alt="profile" class=" h-8" />
         </button>
-        <button class="ml-2 rounded-lg bg-red-600" onclick={()=>signOut("google")}>
+        <button
+          class="ml-2 rounded-lg bg-red-500"
+          onClick={() => signOut("google")}
+        >
           <p class="text-red-100 pl-3 pr-3 pt-2 pb-2">Logout</p>
         </button>
       </div>

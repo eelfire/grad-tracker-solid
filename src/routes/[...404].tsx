@@ -1,4 +1,3 @@
-import { A } from "solid-start";
 import Navbar from "~/components/Navbar";
 
 const pageNotFound = () => {
@@ -15,9 +14,9 @@ const pageNotFound = () => {
         </div>
         <p class="text-2xl m-4">Page not found</p>
         <div class="mt-8">
-          <A href="/" class="p-4 m-4 bg-teal-100 text-teal-600 rounded-lg">
+          <a href="/" class="p-4 m-4 bg-teal-100 text-teal-600 rounded-lg">
             Go back to Dashboard
-          </A>
+          </a>
         </div>
       </div>
     </div>

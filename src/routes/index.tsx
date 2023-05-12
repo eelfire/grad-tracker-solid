@@ -1,9 +1,9 @@
-import { type VoidComponent } from "solid-js";
 import { Body, Head, Link, Meta, Title } from "solid-start";
 import Navbar from "~/components/Navbar";
+import Protected from "~/components/Protected";
 import Quest from "~/components/Quest";
 
-const Home: VoidComponent = () => {
+export const { routeData, Page } = Protected(() => {
   return (
     <>
       <Head>
@@ -134,6 +134,6 @@ const Home: VoidComponent = () => {
       </Body>
     </>
   );
-};
+});
 
-export default Home;
+export default Page;
