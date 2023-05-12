@@ -1,12 +1,12 @@
-//@ts-nocheck
 import { SolidAuth, type SolidAuthConfig } from "@auth/solid-start";
 import Google from "@auth/core/providers/google";
+import { serverEnv } from "~/env/server";
 
 export const authOpts: SolidAuthConfig = {
   providers: [
     Google({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: serverEnv.GOOGLE_CLIENT_ID,
+      clientSecret: serverEnv.GOOGLE_CLIENT_SECRET,
     }),
   ],
   debug: false,
