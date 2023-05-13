@@ -1,20 +1,9 @@
-import { type VoidComponent } from "solid-js";
+import { JSX, type VoidComponent } from "solid-js";
 import { Body, Head, Link, Meta, Title } from "solid-start";
 import Navbar from "~/components/Navbar";
 
-import {
-  DragDropProvider,
-  DragDropSensors,
-  DragEventHandler,
-  useDragDropContext,
-  createDraggable,
-  createDroppable,
-  Id,
-} from "@thisbeyond/solid-dnd";
-import { createSignal, Show } from "solid-js";
-
-// const Draggable = () => {
-//   const draggable = createDraggable(1);
+// const Draggable = (props: { id: Id }) => {
+//   const draggable = createDraggable(props.id);
 //   return (
 //     <div
 //       use:draggable
@@ -36,75 +25,29 @@ import { createSignal, Show } from "solid-js";
 //   );
 // };
 
-// const Droppable = (props) => {
-//   const droppable = createDroppable(1);
+// const Droppable = (props: { id: Id }) => {
+//   const droppable = createDroppable(props.id);
+//   return <div use:droppable>droppable</div>;
+// };
+
+// const Sandbox = () => {
+//   const [, { onDragEnd }] = useDragDropContext();
+
+//   onDragEnd(({ draggable, droppable }) => {
+//     if (droppable) {
+//       // Handle the drop. Note that solid-dnd doesn't move a draggable into a
+//       // droppable on drop. It leaves it up to you how you want to handle the
+//       // drop.
+//     }
+//   });
+
 //   return (
-//     <div
-//       use:droppable
-//       class="droppable m-4 border-4"
-//       classList={{ "!droppable-accept": droppable.isActiveDroppable }}
-//     >
-//       Droppable
-//       {props.children}
+//     <div>
+//       <Draggable id="draggable-1" />
+//       <Droppable id="droppable-2" />
 //     </div>
 //   );
 // };
-
-// const [where, setWhere] = createSignal("outside");
-// const onDragEnd: DragEventHandler = ({ droppable }) => {
-//   if (droppable) {
-//     setWhere("inside");
-//   } else {
-//     setWhere("outside");
-//   }
-// };
-
-const Draggable = (props: { id: Id }) => {
-  const draggable = createDraggable(props.id);
-  return (
-    <div
-      use:draggable
-      class="rounded-xl text-blue-500 overflow-hidden shadow-lg p-3 bg-sky-100 w-40 h-36 flex flex-col justify-around draggable"
-    >
-      <div class="font-semibold text-lg mb-px self-center">ES 301</div>
-      <p class="text-xs self-center text-center">
-        Data Structures and Algorithms II
-      </p>
-      <div class="flex flex-row pt-4">
-        <div class="flex-1">
-          <span class="inline-block bg-blue-400 rounded-full px-3 py-1 text-xs text-slate-100 mr-2 mb-2">
-            Know more
-          </span>
-        </div>
-        <p class="font-semibold text-xl mr-3">4</p>
-      </div>
-    </div>
-  );
-};
-
-const Droppable = (props: { id: Id }) => {
-  const droppable = createDroppable(props.id);
-  return <div use:droppable>droppable</div>;
-};
-
-const Sandbox = () => {
-  const [, { onDragEnd }] = useDragDropContext();
-
-  onDragEnd(({ draggable, droppable }) => {
-    if (droppable) {
-      // Handle the drop. Note that solid-dnd doesn't move a draggable into a
-      // droppable on drop. It leaves it up to you how you want to handle the
-      // drop.
-    }
-  });
-
-  return (
-    <div>
-      <Draggable id="draggable-1" />
-      <Droppable id="droppable-2" />
-    </div>
-  );
-};
 
 const Planner: VoidComponent = () => {
   return (
@@ -159,11 +102,6 @@ const Planner: VoidComponent = () => {
         <div class="m-12">
           <div class="w-full flex flex-row max-w-screen-2xl overflow-hidden m-auto pb-7">
             <div class="flex flex-col flex-1">
-              <DragDropProvider>
-                <DragDropSensors>
-                  <Sandbox />
-                </DragDropSensors>
-              </DragDropProvider>
               <div class="rounded-xl text-blue-500 overflow-hidden shadow-lg p-3 bg-sky-100 w-40 h-36 flex flex-col justify-around">
                 <div class="font-semibold text-lg mb-px self-center">
                   ES 301
