@@ -1,8 +1,28 @@
-import { SolidAuth, type SolidAuthConfig } from "@auth/solid-start";
+// import { authOptions } from "~/server/auth";
+import { SolidAuth, type SolidAuthConfig } from "@solid-auth/base";
 import Google from "@auth/core/providers/google";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { prisma } from "~/server/db/client";
 import { serverEnv } from "~/env/server";
 
-export const authOpts: SolidAuthConfig = {
+// declare module "@auth/core/types" {
+//   export interface Session {
+//     user?: {
+//       id?: string;
+//     } & DefaultSession["user"];
+//   }
+// }
+
+export const authOptions: SolidAuthConfig = {
+  // callbacks: {
+  //   session({ session, user }) {
+  //     if (session.user) {
+  //       session.user.id = user.id;
+  //     }
+  //     return session;
+  //   },
+  // },
+  // adapter: PrismaAdapter(prisma),
   providers: [
     Google({
       clientId: serverEnv.GOOGLE_CLIENT_ID,
@@ -12,4 +32,4 @@ export const authOpts: SolidAuthConfig = {
   debug: false,
 };
 
-export const { GET, POST } = SolidAuth(authOpts);
+export const { GET, POST } = SolidAuth(authOptions);

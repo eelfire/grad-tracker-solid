@@ -12,6 +12,7 @@ import {
   Scripts,
   Title,
 } from "solid-start";
+import { SessionProvider } from "@solid-auth/base/client";
 
 export default function Root() {
   return (
@@ -22,13 +23,15 @@ export default function Root() {
         <Meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Body>
-        <Suspense>
-          <ErrorBoundary>
-            <Routes>
-              <FileRoutes />
-            </Routes>
-          </ErrorBoundary>
-        </Suspense>
+        <SessionProvider>
+          <Suspense>
+            <ErrorBoundary>
+              <Routes>
+                <FileRoutes />
+              </Routes>
+            </ErrorBoundary>
+          </Suspense>
+        </SessionProvider>
         <Scripts />
       </Body>
     </Html>

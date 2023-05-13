@@ -1,9 +1,10 @@
+import { Show, Suspense, type VoidComponent } from "solid-js";
 import { Body, Head, Link, Meta, Title } from "solid-start";
 import Navbar from "~/components/Navbar";
-import Protected from "~/components/Protected";
 import Quest from "~/components/Quest";
+import { createSession, signIn, signOut } from "@solid-auth/base/client";
 
-export const { routeData, Page } = Protected(() => {
+const Home: VoidComponent = () => {
   return (
     <>
       <Head>
@@ -16,6 +17,9 @@ export const { routeData, Page } = Protected(() => {
       </Head>
       <Body>
         <Navbar />
+        <Suspense>
+          <GetSession />
+        </Suspense>
         <div class="max-w-screen-2xl m-auto">
           <details class="m-6 mt-12 p-4 border-2 rounded-2xl">
             <summary class=" text-2xl">Questionnaire</summary>
@@ -134,6 +138,36 @@ export const { routeData, Page } = Protected(() => {
       </Body>
     </>
   );
-});
+};
 
-export default Page;
+export default Home;
+
+const GetSession: VoidComponent = () => {
+  const session = createSession();
+  return (
+    <div class="flex flex-col items-center justify-center gap-4">
+      <Show
+        when={session()}
+        fallback={
+          <button
+            onClick={() => {
+              console.log("signing in");
+              signIn();
+            }}
+            class="rounded-full bg-black px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
+          >
+            Sign in
+          </button>
+        }
+      >
+        <span class="text-xl text-white">Welcome {session()?.user?.name}</span>
+        <button
+          onClick={() => signOut({ redirectTo: "/" })}
+          class="rounded-full bg-black px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
+        >
+          Sign out
+        </button>
+      </Show>
+    </div>
+  );
+};

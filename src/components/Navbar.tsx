@@ -1,4 +1,4 @@
-import { signOut } from "@auth/solid-start/client";
+import { signOut } from "@solid-auth/base/client";
 
 const Navbar = () => {
   return (
@@ -38,7 +38,7 @@ const Navbar = () => {
         </button>
         <button
           class="ml-2 rounded-lg bg-red-500"
-          onClick={() => signOut("google")}
+          onClick={() => signOut({ redirectTo: "/login" })}
         >
           <p class="text-red-100 pl-3 pr-3 pt-2 pb-2">Logout</p>
         </button>
