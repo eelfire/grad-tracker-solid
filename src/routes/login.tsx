@@ -2,8 +2,8 @@ import { Title, Head, Meta, Link, Body } from "solid-start";
 import { Show } from "solid-js";
 import { getSession } from "@solid-auth/base";
 import { createServerData$ } from "solid-start/server";
-// import { authOptions } from "~/server/auth";
-import { authOptions } from "~/routes/api/auth/[...solidauth]";
+import { authOptions } from "~/server/auth";
+// import { authOptions } from "~/routes/api/auth/[...solidauth]";
 import { signIn, signOut } from "@solid-auth/base/client";
 
 export const useSession = () => {
@@ -48,7 +48,7 @@ const loginPage = () => {
                   class="p-2.5 rounded-lg bg-[#346df1] text-white text-lg font-bold flex items-center justify-center"
                   onClick={() => {
                     console.log("signing in...");
-                    signIn();
+                    signIn("google", { redirectTo: "/", redirect: true });
                   }}
                 >
                   Sign in
@@ -63,12 +63,22 @@ const loginPage = () => {
                     {(im) => <img src={im} class="w-12 h-12 rounded-full" />}
                   </Show>
                   <div class="flex flex-col">
-                    <h3 class="font-bold text-lg">Signed in as</h3>
+                    <h3 class="text-sm">Signed in as</h3>
                     <p class="text-lg font-semibold">{us?.name}</p>
+                  </div>
+                  <div>
+                    <a
+                      href="/"
+                      class="p-2 m-2 bg-teal-100 text-teal-600 rounded-lg"
+                    >
+                      Dashboard
+                    </a>
                   </div>
                 </div>
                 <button
-                  onClick={() => signOut({ redirectTo: "/login" })}
+                  onClick={() => {
+                    signOut({ redirectTo: "/login", redirect: true });
+                  }}
                   class="text-[#555] font-semibold underline"
                 >
                   Sign out

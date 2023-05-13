@@ -1,6 +1,11 @@
 import { signOut } from "@solid-auth/base/client";
+import { createSession } from "@solid-auth/base/client";
+import { Show } from "solid-js";
 
 const Navbar = () => {
+  const session = createSession();
+  const user = () => session()?.user;
+
   return (
     <nav class="flex flex-row h-16 items-center justify-center p-4 border-b-2">
       <div class="flex-start h-8 flex flex-row items-center ml-8">
@@ -33,12 +38,18 @@ const Navbar = () => {
           placeholder="Search"
           class="border-2 bg-gray-100 p-1 mr-6 rounded-lg"
         />
-        <button class="">
-          <img src="/user.svg" alt="profile" class=" h-8" />
+        <button class="flex items-center">
+          <Show when={user()?.name} keyed>
+            {(nm) => <p class="text-lg m-2">Hi! {nm}</p>}
+          </Show>
+          <Show when={user()?.image} keyed>
+            {(im) => <img src={im} class="h-10 rounded-full m-2" />}
+          </Show>
+          {/* <img src="{user?.image}" alt="profile" class=" h-8" /> */}
         </button>
         <button
           class="ml-2 rounded-lg bg-red-500"
-          onClick={() => signOut({ redirectTo: "/login" })}
+          onClick={() => signOut({ redirectTo: "/login", redirect: true })}
         >
           <p class="text-red-100 pl-3 pr-3 pt-2 pb-2">Logout</p>
         </button>
