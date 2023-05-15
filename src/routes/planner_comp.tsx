@@ -7,15 +7,15 @@ import {
   createDroppable,
   closestCenter,
 } from "@thisbeyond/solid-dnd";
-import { batch, createSignal, For } from "solid-js";
-import { createStore } from "solid-js/store";
+import { batch, For } from "solid-js";
+import { createStore, produce } from "solid-js/store";
 
-const Sortable = (props) => {
+const Sortable = (props: any) => {
   const sortable = createSortable(props.item);
   return (
     <div
       use:sortable
-      class="rounded-xl text-blue-500 overflow-hidden shadow-lg p-3 bg-sky-100 w-40 h-36 flex flex-col justify-around m-3"
+      class="cursor-move rounded-lg text-blue-500 shadow-lg p-3 bg-sky-100 w-40 h-36 flex flex-col justify-around m-3"
       classList={{ "opacity-25": sortable.isActiveDraggable }}
     >
       <div class="font-semibold text-lg mb-px self-center">
@@ -36,32 +36,73 @@ const Sortable = (props) => {
   );
 };
 
-const Column = (props) => {
+const Row = (props: any) => {
   const droppable = createDroppable(props.id);
   return (
     <div
       use:droppable
-      class="column border-5 m-5 border-black w-5/12 bg-sky-200 flex flex-row overflow-hidden"
+      class="column w-auto border rounded-lg m-3 mr-36 border-gray-500 bg-sky-200 grid-flow-col overflow-scroll"
     >
       <SortableProvider ids={props.items}>
+        <p class="border rounded-lg h-36 w-40 m-3 text-4xl text-gray-700 border-gray-500">
+          Sem {props.id}
+        </p>
         <For each={props.items}>{(item) => <Sortable item={item} />}</For>
+        <button
+          class="border rounded-lg h-36 w-40 m-3 text-4xl text-gray-700 border-gray-500"
+          onClick={() => addCourse(props.id, 7)}
+        >
+          +
+        </button>
       </SortableProvider>
     </div>
   );
 };
 
-const MultipleListsExample = () => {
-  const [containers, setContainers] = createStore<Record<string, number[]>>({
-    A: [1, 2, 3],
-    B: [4, 5, 6],
-  });
+// const dustbin = createDroppable("dustbin");
 
-  const containerIds = () => Object.keys(containers);
+const [sem, setSem] = createStore({
+  A: [1, 2, 3],
+  B: [4, 5, 6],
+});
+
+const addSem = (id) => {
+  setSem((sem) => ({ ...sem, [id]: [] }));
+};
+
+// delSem is not working
+const delSem = (id) => {
+  console.log(id);
+  setSem((sem) => {
+    console.log(sem);
+    const { [id]: _, ...rest } = sem;
+    console.log(rest);
+    return rest;
+  });
+};
+
+const renameSem = (id, name) => {
+  setSem((sem) => ({ ...sem, [name]: sem[id] }));
+  delSem(id);
+};
+
+const addCourse = (id, number) => {
+  setSem((sem) => {
+    return { ...sem, [id]: [...sem[id], number] };
+  });
+};
+
+const delCourse = (id) => {
+  setSem((sem) => ({ ...sem, [id]: sem[id].slice(0, -1) }));
+};
+
+const Planner = () => {
+  const containerIds = () => Object.keys(sem);
 
   const isContainer = (id) => containerIds().includes(id);
 
   const getContainer = (id) => {
-    for (const [key, items] of Object.entries(containers)) {
+    for (const [key, items] of Object.entries(sem)) {
       if (items.includes(id)) {
         return key;
       }
@@ -75,7 +116,7 @@ const MultipleListsExample = () => {
       context
     );
     if (closestContainer) {
-      const containerItemIds = containers[closestContainer.id];
+      const containerItemIds = sem[closestContainer.id];
       const closestItem = closestCenter(
         draggable,
         droppables.filter((droppable) =>
@@ -115,15 +156,15 @@ const MultipleListsExample = () => {
       draggableContainer != droppableContainer ||
       !onlyWhenChangingContainer
     ) {
-      const containerItemIds = containers[droppableContainer];
+      const containerItemIds = sem[droppableContainer];
       let index = containerItemIds.indexOf(droppable.id);
       if (index === -1) index = containerItemIds.length;
 
       batch(() => {
-        setContainers(draggableContainer, (items) =>
+        setSem(draggableContainer, (items) =>
           items.filter((item) => item !== draggable.id)
         );
-        setContainers(droppableContainer, (items) => [
+        setSem(droppableContainer, (items) => [
           ...items.slice(0, index),
           draggable.id,
           ...items.slice(index),
@@ -145,24 +186,66 @@ const MultipleListsExample = () => {
   };
 
   return (
-    <div class="flex flex-col flex-1 mt-5 self-stretch">
-      <DragDropProvider
-        onDragOver={onDragOver}
-        onDragEnd={onDragEnd}
-        collisionDetector={closestContainerOrItem}
+    <>
+      <button
+        class="p-2 m-2 bg-teal-100 text-teal-600 rounded-lg"
+        onClick={() => console.log(sem)}
       >
-        <DragDropSensors />
-        <div class="columns">
-          <For each={containerIds()}>
-            {(key) => <Column id={key} items={containers[key]} />}
-          </For>
-        </div>
-        <DragOverlay>
-          {(draggable) => <div class="sortable">{draggable.id}</div>}
-        </DragOverlay>
-      </DragDropProvider>
-    </div>
+        console log planner
+      </button>
+      <button
+        class="p-2 m-2 bg-teal-100 text-teal-600 rounded-lg"
+        onClick={() => addSem("C")}
+      >
+        add sem C
+      </button>
+      <button
+        class="p-2 m-2 bg-teal-100 text-teal-600 rounded-lg"
+        onClick={() => delSem("C")}
+      >
+        del sem C
+      </button>
+      <button
+        class="p-2 m-2 bg-teal-100 text-teal-600 rounded-lg"
+        onClick={() => addCourse("C", 8)}
+      >
+        add course in C
+      </button>
+      <button
+        class="p-2 m-2 bg-teal-100 text-teal-600 rounded-lg"
+        onClick={() => delCourse("C")}
+      >
+        del course in C
+      </button>
+      <button
+        class="p-2 m-2 bg-teal-100 text-teal-600 rounded-lg"
+        onClick={() => renameSem("C", "D")}
+      >
+        rename sem C to D
+      </button>
+
+      <p>json.stringify(sem) {JSON.stringify(sem)}</p>
+
+      <div class="flex flex-col flex-1 self-stretch">
+        <DragDropProvider
+          onDragOver={onDragOver}
+          onDragEnd={onDragEnd}
+          collisionDetector={closestContainerOrItem}
+        >
+          <DragDropSensors />
+          <div class="columns">
+            <For each={containerIds()}>
+              {(key) => <Row id={key} items={sem[key]} />}
+            </For>
+          </div>
+          <DragOverlay>
+            {(draggable) => <div class="sortable">{draggable.id}</div>}
+          </DragOverlay>
+        </DragDropProvider>
+      </div>
+      <div></div>
+    </>
   );
 };
 
-export default MultipleListsExample;
+export default Planner;
