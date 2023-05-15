@@ -13,22 +13,19 @@ const Navbar = () => {
         <h1 class="p-4">Grad-Tracker</h1>
       </div>
       <div class="flex-1 items-center p-2 m-2">
-        <a href="/" class="p-2 m-2 bg-teal-100 text-teal-600 rounded-lg">
+        <a href="/" class="navbar-button">
           Dashboard
         </a>
-        <a href="/courses" class="p-2 m-2 bg-teal-100 text-teal-600 rounded-lg">
+        <a href="/courses" class="navbar-button">
           Courses
         </a>
-        <a href="/planner" class="p-2 m-2 bg-teal-100 text-teal-600 rounded-lg">
+        <a href="/planner" class="navbar-button">
           Planner
         </a>
-        <a href="/feed" class="p-2 m-2 bg-teal-100 text-teal-600 rounded-lg">
+        <a href="/feed" class="navbar-button">
           Feed
         </a>
-        <a
-          href="/calendar"
-          class="p-2 m-2 bg-teal-100 text-teal-600 rounded-lg"
-        >
+        <a href="/calendar" class="navbar-button">
           Calendar
         </a>
       </div>

@@ -19,7 +19,7 @@ export const { routeData, Page } = Protected(() => {
         <Navbar />
         <div class="max-w-screen-2xl m-auto">
           <details class="m-6 mt-12 p-4 border-2 rounded-2xl">
-            <summary class=" text-2xl">Questionnaire</summary>
+            <summary class="text-2xl cursor-pointer">Questionnaire</summary>
             <Quest />
           </details>
         </div>
@@ -75,9 +75,12 @@ export const { routeData, Page } = Protected(() => {
                 <h3 class=" font-semibold text-2xl">Credits Planned:</h3>
                 <div class="flex">
                   <h3 class="flex-1 text-2xl font-bold self-center">80%</h3>
-                  <button class=" p-3 w-24 bg-blue-400 rounded-xl text-white">
+                  <a
+                    class="p-3 w-24 bg-blue-400 rounded-xl text-white text-center hover:underline"
+                    href="/planner"
+                  >
                     Plan
-                  </button>
+                  </a>
                 </div>
                 <div class="w-full bg-white rounded-full h-2.5">
                   <div
