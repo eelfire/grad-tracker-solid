@@ -7,6 +7,7 @@ export const serverScheme = z.object({
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
   AUTH_SECRET: z.string(),
+  AUTH_TRUST_HOST: z.string().optional(),
   DATABASE_URL: z.string(),
 });
 
