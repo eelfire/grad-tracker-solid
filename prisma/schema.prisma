@@ -1,62 +1,230 @@
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider     = "mysql"
-    url          = env("DATABASE_URL")
-    relationMode = "prisma"
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Notes {
-    id   String @id @default(cuid())
-    text String
+  id   String @id @default(cuid())
+  text String
 }
 
 model Account {
-    id                String  @id @default(cuid())
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String? @db.Text
-    access_token      String? @db.Text
-    expires_in        Int?
-    token_type        String?
-    scope             String?
-    id_token          String? @db.Text
-    session_state     String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_in        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
 
-    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@unique([provider, providerAccountId])
-    @@index([userId])
+  @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@index([userId])
-}
-
-model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
+  @@index([userId])
 }
 
 model VerificationToken {
-    identifier String
-    token      String   @unique
-    expires    DateTime
+  identifier String
+  token      String   @unique
+  expires    DateTime
 
-    @@unique([identifier, token])
+  @@unique([identifier, token])
 }
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+
+  accounts Account[]
+  sessions Session[]
+
+  // userDetails   UserDetails @relation("UserDetails", fields: [userDetailsId], references: [id])
+  // userDetailsId Int         @unique
+}
+
+// model UserDetails {
+//   id                Int        @id @default(autoincrement())
+//   branch            String
+//   year              Int
+//   rollNo            Int?
+//   grade             Grades[]   @relation("UserGrades")
+//   isAdmin           Boolean    @default(false)
+//   isStudent         Boolean    @default(true)
+//   isFA              Boolean    @default(false)
+//   interests         Topics[]   @relation("UserInterests")
+//   courses           Course[]   @relation("UsersEnrolled")
+//   feedbacks         Feedback[] @relation("UserFeedback")
+//   programsPublished Program[]  @relation("ProgramPublisher")
+//   programsEnrolled  Program[]  @relation("ProgramEnrolled")
+//   dualDegree        Boolean    @default(false)
+//   dualMajor         Boolean    @default(false)
+//   honors            Boolean    @default(false)
+//   minors            Boolean    @default(false)
+
+//   academicPath UserAcademicPath[] @relation("UserAcademicPath")
+
+//   user   User? @relation("UserDetails")
+//   userId Int
+// }
+
+// model UserAcademicPath {
+//   id      Int                     @id @default(autoincrement())
+//   credits CourseCategoryCredits[] @relation("UserAcademicPathCredits")
+//   // courses Course[]      @relation("UserCourses")
+//   user    UserDetails[]           @relation("UserAcademicPath")
+// }
+
+// model CourseCategoryCredits {
+//   id  Int @id @default(autoincrement())
+//   BE  Int
+//   CE  Int
+//   CG  Int
+//   CH  Int
+//   CL  Int
+//   CS  Int
+//   DES Int
+//   EE  Int
+//   EH  Int
+//   ES  Int
+//   FP  Int
+//   GE  Int
+//   HS  Int
+//   IN  Int
+//   MA  Int
+//   ME  Int
+//   MS  Int
+//   MSE Int
+//   PH  Int
+
+//   academicPath UserAcademicPath[] @relation("UserAcademicPathCredits")
+//   // pathId Int
+// }
+
+// model Grades {
+//   id       Int           @id @default(autoincrement())
+//   // name    String
+//   // credits Int
+//   // grade   String
+//   semester Semesters[]   @relation("UserSemesters")
+//   cpi      Float?
+//   user     UserDetails[] @relation("UserGrades")
+// }
+
+// model Semesters {
+//   id      Int      @id @default(autoincrement())
+//   courses Course[] @relation("UserCourses")
+//   credits Int
+//   spi     Int?
+//   grades  Grades[] @relation("UserSemesters")
+// }
+
+// model Topics {
+//   id          Int           @id @default(autoincrement())
+//   name        String
+//   description String
+//   users       UserDetails[] @relation("UserInterests")
+//   programs    Program[]     @relation("ProgramTopics")
+// }
+
+// model Course {
+//   id          Int           @id @default(autoincrement())
+//   name        String
+//   description String        @db.Text
+//   code        String
+//   credits     Int
+//   syllabus    String?       @db.Text
+//   policy      String?
+//   resources   Resources[]   @relation("UserResources")
+//   // type        CourseType
+//   enrolled    UserDetails[] @relation("UsersEnrolled")
+//   usercourses Semesters[]   @relation("UserCourses")
+//   feedbacks   Feedback[]    @relation("CourseFeedback")
+//   // AcademicPath   UserAcademicPath? @relation(fields: [academicPathId], references: [id])
+//   // academicPathId Int?
+// }
+
+// model Resources {
+//   id          Int       @id @default(autoincrement())
+//   name        String
+//   description String?   @db.Text
+//   link        String?
+//   type        String?
+//   course      Course[]  @relation("UserResources")
+//   program     Program[] @relation("ProgramResources")
+// }
+
+// model Feedback {
+//   id                Int           @id @default(autoincrement())
+//   rating            Int
+//   message           String?       @db.Text
+//   knowledgeAcquired String
+//   skillsAcquired    String
+//   user              UserDetails[] @relation("UserFeedback")
+//   course            Course[]      @relation("CourseFeedback")
+//   program           Program[]     @relation("ProgramFeedback")
+// }
+
+// // model ProgramModerator {
+// //   id      Int    @id @default(autoincrement())
+// //   name    String
+// //   email   String @unique
+// //   program Program[]
+// // }
+
+// model Program {
+//   id            Int           @id @default(autoincrement())
+//   type          ProgramType
+//   description   String        @db.Text
+//   publisher     UserDetails[] @relation("ProgramPublisher")
+//   topics        Topics[]      @relation("ProgramTopics")
+//   resources     Resources[]   @relation("ProgramResources")
+//   time          DateTime
+//   prerequisites String?
+//   // moderator   ProgramModerator @relation(fields: [moderatorId], references: [id])
+//   // moderatorId Int
+//   feedbacks     Feedback[]    @relation("ProgramFeedback")
+//   enrolled      UserDetails[] @relation("ProgramEnrolled")
+// }
+
+// // enum CourseType {
+// //   COMPULSORY
+// //   ELECTIVE
+// //   SHORT_COURSE
+// //   MINOR
+// //   DUAL_MAJOR
+// //   PROJECT
+// // }
+
+// enum ProgramType {
+//   // COURSE
+//   WORKSHOP
+//   EVENT
+//   COMPETITION
+//   SEMINAR
+//   COUNCIL
+//   CLUB
+//   OTHER
+// }

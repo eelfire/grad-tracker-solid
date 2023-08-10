@@ -9,6 +9,7 @@ export const serverScheme = z.object({
   AUTH_SECRET: z.string(),
   AUTH_TRUST_HOST: z.string().optional(),
   DATABASE_URL: z.string(),
+  VERCEL_URL: z.string().optional(),
 });
 
 export const clientScheme = z.object({

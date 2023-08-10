@@ -12,7 +12,7 @@
   "dependencies": {
     "@auth/core": "^0.5.1",
     "@next-auth/prisma-adapter": "^1.0.5",
-    "@prisma/client": "^4.10.1",
+    "@prisma/client": "latest",
     "@solid-auth/base": "^2.0.2",
     "@solidjs/meta": "^0.28.2",
     "@solidjs/router": "^0.8.2",
@@ -32,7 +32,7 @@
     "eslint": "^8.34.0",
     "eslint-plugin-solid": "^0.9.4",
     "postcss": "^8.4.21",
-    "prisma": "^4.10.1",
+    "prisma": "^4.15.0",
     "solid-start-node": "^0.2.26",
     "solid-start-vercel": "^0.2.26",
     "tailwindcss": "^3.2.7",
